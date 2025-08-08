@@ -27,15 +27,16 @@ pipeline{
             steps{
                 withCredentials([usernamePassword(credentialsId: 'Docker-cred', passwordVariable: 'DOCKERHUB_PASS', usernameVariable: 'DOCKERHUB_USER')]) {
                     sh "docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS"
-                    sh "docker tag flaskapp madhupdevops/flaskapp-getfitwithsagar"
-                    sh "docker push madhupdevops/flaskapp-getfitwithsagar"
+                    sh "docker tag flaskapp sush837/flask-app"
+                    sh "docker push sush837/flask-app"
                 }
             }
         }
         
         stage("Deploy docker container"){
             steps{
-                sh "docker run -itd --name flaskapp -p 5000:5000 madhupdevops/flaskapp-getfitwithsagar"
+                sh "sh "docker run -itd --name flaskapp -p 5000:5000 sush837/flask-app"
+"
             }
         }
     }
