@@ -7,17 +7,21 @@ WORKDIR /app
 # Copy code
 COPY . .
 
-# Run Tests
+# Install dependencies
+RUN pip install --upgrade pip
 RUN pip install --upgrade flask
-RUN pip install '.[test]'
-RUN pytest
-
-# Install Dependencies
 RUN pip install -e .
+
+# Optional: Run tests (can be removed in production builds)
+# RUN pip install '.[test]'
+# RUN pytest
+
+# Set environment variables for Flask
+ENV FLASK_APP=flaskr
+ENV FLASK_RUN_HOST=0.0.0.0
 
 # Expose port
 EXPOSE 5000
 
-# Run the app
-RUN flask --app flaskr init-db
-ENTRYPOINT ["flask", "--app", "flaskr", "run", "--host=0.0.0.0", "--debug"]
+# Command to run Flask app
+CMD ["flask", "run"]
